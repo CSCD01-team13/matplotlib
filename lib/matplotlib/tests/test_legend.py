@@ -11,6 +11,7 @@ import matplotlib as mpl
 import matplotlib.transforms as mtransforms
 import matplotlib.collections as mcollections
 from matplotlib.legend_handler import HandlerTuple
+from matplotlib.patches import Patch
 import matplotlib.legend as mlegend
 from matplotlib import rc_context
 
@@ -464,6 +465,26 @@ def test_handler_numpoints():
     fig, ax = plt.subplots()
     ax.plot(range(5), label='test')
     ax.legend(numpoints=0.5)
+
+
+@image_comparison(['quiverkey.png'])
+def test_handler_quiverkey():
+    """Test legend handler with a quiverkey as handler."""
+    # related to #16664
+    fig, ax = plt.subplots()
+    X = np.arange(-10, 11, 1)
+    Y = np.arange(-10, 11, 1)
+    U, V = np.meshgrid(X, Y)
+
+    q = ax.quiver(X, Y, U, V)
+
+    qk = ax.quiverkey(q, 0.9,0.8, U=10, label='QK length = 10', labelpos='E')
+
+    legend_elements = [
+        qk
+    ]
+
+    ax.legend(handles=legend_elements)
 
 
 def test_empty_bar_chart_with_legend():

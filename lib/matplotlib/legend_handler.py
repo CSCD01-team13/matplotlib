@@ -29,7 +29,6 @@ from itertools import cycle
 import numpy as np
 
 from matplotlib.lines import Line2D
-from matplotlib.quiver import Quiver, QuiverKey
 from matplotlib.patches import Rectangle, FancyArrowPatch
 from matplotlib.text import Text
 import matplotlib.collections as mcoll
@@ -262,21 +261,8 @@ class HandlerQuiverKey(HandlerBase):
     """
     Handler for `.QuiverKey` instances.
     """
-    def __init__(self, patch_func=None, **kw):
+    def __init__(self, **kw):
         """
-        Parameters
-        ----------
-        patch_func : callable, optional
-            The function that creates the legend key artist.
-            *patch_func* should have the signature::
-
-                def patch_func(legend=legend, orig_handle=orig_handle,
-                               xdescent=xdescent, ydescent=ydescent,
-                               width=width, height=height, fontsize=fontsize)
-
-            Subsequently the created artist will have its ``update_prop``
-            method called and the appropriate transform will be applied.
-
         Notes
         -----
         Any other keyword arguments are given to `HandlerBase`.
@@ -297,6 +283,7 @@ class HandlerQuiverKey(HandlerBase):
         orig_handle.remove()
 
         return [p, text]
+
 
 class HandlerPatch(HandlerBase):
     """
