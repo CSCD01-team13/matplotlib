@@ -29,7 +29,9 @@ from itertools import cycle
 import numpy as np
 
 from matplotlib.lines import Line2D
-from matplotlib.patches import Rectangle
+from matplotlib.quiver import Quiver, QuiverKey
+from matplotlib.patches import Rectangle, FancyArrowPatch
+from matplotlib.text import Text
 import matplotlib.collections as mcoll
 import matplotlib.colors as mcolors
 
@@ -256,6 +258,45 @@ class HandlerLine2D(HandlerNpoints):
 
         return [legline, legline_marker]
 
+class HandlerQuiverKey(HandlerBase):
+    """
+    Handler for `.QuiverKey` instances.
+    """
+    def __init__(self, patch_func=None, **kw):
+        """
+        Parameters
+        ----------
+        patch_func : callable, optional
+            The function that creates the legend key artist.
+            *patch_func* should have the signature::
+
+                def patch_func(legend=legend, orig_handle=orig_handle,
+                               xdescent=xdescent, ydescent=ydescent,
+                               width=width, height=height, fontsize=fontsize)
+
+            Subsequently the created artist will have its ``update_prop``
+            method called and the appropriate transform will be applied.
+
+        Notes
+        -----
+        Any other keyword arguments are given to `HandlerBase`.
+        """
+        HandlerBase.__init__(self, **kw)
+
+    def create_artists(self, legend, orig_handle,
+                       xdescent, ydescent, width, height, fontsize, trans):
+        x_tail = xdescent
+        y_tail = 3
+        x_head = xdescent + width
+        y_head = 3
+        p = FancyArrowPatch((x_tail, y_tail), (x_head, y_head),
+                                 mutation_scale=8, color='k')
+        text = Text(xdescent + width, ydescent, text=orig_handle.label)
+
+        # Remove the quiver key from the plot
+        orig_handle.remove()
+
+        return [p, text]
 
 class HandlerPatch(HandlerBase):
     """

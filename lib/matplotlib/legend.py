@@ -43,6 +43,7 @@ from matplotlib.offsetbox import HPacker, VPacker, TextArea, DrawingArea
 from matplotlib.offsetbox import DraggableOffsetBox
 
 from matplotlib.container import ErrorbarContainer, BarContainer, StemContainer
+from matplotlib.quiver import QuiverKey
 from . import legend_handler
 
 
@@ -318,7 +319,6 @@ class Legend(Artist):
                  framealpha=None,  # set frame alpha
                  edgecolor=None,  # frame patch edgecolor
                  facecolor=None,  # frame patch facecolor
-
                  bbox_to_anchor=None,  # bbox that the legend will be anchored.
                  bbox_transform=None,  # transform for the bbox
                  frameon=None,  # draw frame
@@ -623,7 +623,8 @@ class Legend(Artist):
             update_func=legend_handler.update_from_first_child),
         tuple: legend_handler.HandlerTuple(),
         PathCollection: legend_handler.HandlerPathCollection(),
-        PolyCollection: legend_handler.HandlerPolyCollection()
+        PolyCollection: legend_handler.HandlerPolyCollection(),
+        QuiverKey : legend_handler.HandlerQuiverKey()
         }
 
     # (get|set|update)_default_handler_maps are public interfaces to
