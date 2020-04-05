@@ -11,7 +11,6 @@ import matplotlib as mpl
 import matplotlib.transforms as mtransforms
 import matplotlib.collections as mcollections
 from matplotlib.legend_handler import HandlerTuple
-from matplotlib.patches import Patch
 import matplotlib.legend as mlegend
 from matplotlib import rc_context
 
