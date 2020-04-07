@@ -477,7 +477,7 @@ def test_handler_quiverkey():
 
     q = ax.quiver(X, Y, U, V)
 
-    qk = ax.quiverkey(q, 0.9,0.8, U=10, label='QK length = 10', labelpos='E')
+    qk = ax.quiverkey(q, X, Y, U, label='label', labelpos='E')
 
     legend_elements = [
         qk

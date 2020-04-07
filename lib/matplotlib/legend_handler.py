@@ -272,11 +272,18 @@ class HandlerQuiverKey(HandlerBase):
     def create_artists(self, legend, orig_handle,
                        xdescent, ydescent, width, height, fontsize, trans):
         x_tail = xdescent
-        y_tail = 3
         x_head = xdescent + width
+        # Three units to align the arrow to the center relative to the label
         y_head = 3
+        y_tail = 3
+
+        # Get original colors of the quiver key
+        color = orig_handle.color
+        facecolor = orig_handle.kw.get('facecolor', None)
+
         p = FancyArrowPatch((x_tail, y_tail), (x_head, y_head),
-                                 mutation_scale=8, color='k')
+                                 mutation_scale=8, color=color)
+        p.set_facecolor(color)
         text = Text(xdescent + width, ydescent, text=orig_handle.label)
 
         # Remove the quiver key from the plot
