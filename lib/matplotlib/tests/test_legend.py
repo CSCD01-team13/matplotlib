@@ -466,6 +466,26 @@ def test_handler_numpoints():
     ax.legend(numpoints=0.5)
 
 
+@image_comparison(['quiverkey.png'])
+def test_handler_quiverkey():
+    """Test legend handler with a quiverkey as handler."""
+    # related to #16664
+    fig, ax = plt.subplots()
+    X = np.arange(-10, 11, 1)
+    Y = np.arange(-10, 11, 1)
+    U, V = np.meshgrid(X, Y)
+
+    q = ax.quiver(X, Y, U, V)
+
+    qk = ax.quiverkey(q, X, Y, U, label='label', labelpos='E')
+
+    legend_elements = [
+        qk
+    ]
+
+    ax.legend(handles=legend_elements)
+
+
 def test_empty_bar_chart_with_legend():
     """Test legend when bar chart is empty with a label."""
     # related to issue #13003. Calling plt.legend() should not
